@@ -1,14 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import * as React from "react";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { useFonts } from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function App() {
+function SecondScreen() {
   const [fontsLoaded] = useFonts({
     "Roboto-Black": require("./assets/fonts/Roboto-Black.ttf"),
   });
   return (
     <View style={styles.container}>
-      <View style={styles.gradient} />
       <StatusBar style="auto" />
       <View style={styles.style1}>
         <Image
@@ -23,9 +25,14 @@ export default function App() {
         <Text style={styles.text1}>
           We will help you to grow your business using online server
         </Text>
-        <View style={styles.button}>
-          <Button title="Login" color="#E3C000" style={styles.b} />
-          <Button title="Sign up" color="#E3C000" style={styles.b} />
+        <View style={styles.flexContainer}>
+          <Pressable style={styles.button}>
+            <Text style={styles.b}>LOGIN</Text>
+          </Pressable>
+          <Pressable style={styles.button}>
+            <Text style={styles.b}>SIGN UP</Text>
+          </Pressable>
+          <Text style={styles.text2}>HOW WE WORK?</Text>
         </View>
       </View>
     </View>
@@ -35,13 +42,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#00CCF9",
     alignItems: "center",
     justifyContent: "center",
-  },
-  gradient: {
-    flex: 1,
     width: "100%",
-    backgroundImage: "linear-gradient(to bottom, #C7EFF7, #04CDF9)",
+    height: "100%",
   },
   style1: {
     flex: 1,
@@ -54,14 +59,25 @@ const styles = StyleSheet.create({
   style3: {
     flex: 1,
   },
-  button: {
+  flexContainer: {
+    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignContent: "center",
+  },
+  button: {
+    width: 119,
+    height: 48,
+    borderRadius: "10px",
+    backgroundColor: "#E3C000",
+    alignContent: "center",
+    justifyContent: "center",
+    marginTop: "30px",
   },
   b: {
-    width: "119px",
-    height: "48px",
-    alignItems: "center",
+    fontWeight: 700,
+    color: "black",
+    textAlign: "center",
   },
   logo: {
     width: "140px",
@@ -90,4 +106,29 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignContent: "flex-end",
   },
+  text2: {
+    width: "302px",
+    height: "53px",
+    padding: "20px",
+    fontFamily: "Roboto-Black",
+    fontWeight: "700",
+    fontSize: "18",
+    lineHeight: "21.09px",
+    textAlign: "center",
+  },
 });
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="FirstScreen">
+        <Stack.Screen name="FirstScreen" component={FirstScreen} />
+        <Stack.Screen name="SecondScreen" component={SecondScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;

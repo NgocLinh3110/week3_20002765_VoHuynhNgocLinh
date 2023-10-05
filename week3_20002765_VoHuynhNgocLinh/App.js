@@ -1,8 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import * as React from 'react';
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { useFonts } from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-export default function App() {
+function FirstScreen() {
   const [fontsLoaded] = useFonts({
     "Roboto-Black": require("./assets/fonts/Roboto-Black.ttf"),
   });
@@ -22,17 +25,13 @@ export default function App() {
         <Text style={styles.text1}>
           We will help you to grow your business using online server
         </Text>
-        <View style={styles.button}>
-          <Button
-            title="Login"
-            color="#E3C000"
-            style={styles.b}
-          />
-          <Button 
-          title="Sign up" 
-          color="#E3C000"
-          style={styles.b}
-          />
+        <View style={styles.flexContainer}>
+          <Pressable style={styles.button}>
+            <Text style={styles.b}>LOGIN</Text>
+          </Pressable>
+          <Pressable style={styles.button}>
+            <Text style={styles.b}>SIGN UP</Text>
+          </Pressable>
         </View>
       </View>
     </View>
@@ -45,6 +44,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#00CCF9",
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
+    height: "100%",
   },
   style1: {
     flex: 1,
@@ -57,14 +58,25 @@ const styles = StyleSheet.create({
   style3: {
     flex: 1,
   },
-  button: {
+  flexContainer: {
+    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignContent: "center",
+  },
+  button: {
+    width: 119,
+    height: 48,
+    borderRadius: "10px",
+    backgroundColor: "#E3C000",
+    alignContent: "center",
+    justifyContent: "center",
+    marginTop: '30px'
   },
   b: {
-    width: "119px",
-    height: "48px",
-    alignItems: 'center'
+    fontWeight: 700,
+    color: "black",
+    textAlign: 'center'
   },
   logo: {
     width: "140px",
@@ -94,3 +106,17 @@ const styles = StyleSheet.create({
     alignContent: "flex-end",
   },
 });
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="FirstScreen" component={FirstScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
